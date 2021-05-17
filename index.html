@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <h1> 狼人榜積分 </h1>
+  </head>
+  <body onload="refresh()">
+    <h2>
+      目前排名
+    </h2>
+    <p id='ranking'></p>
+    <button onclick='refresh()'> refresh </button>
+
+    <script>
+      function refresh() {
+        data = google.script.run.withSuccessHandler(function(response){
+        document.getElementById("ranking").innerHTML = "";
+        console.log(response);
+        for (var i=0; i<response.length; i++){
+          win_ratio = Math.round(response[i]["win%"]*100)
+          mvp_ratio = Math.round(response[i]["mvp%"]*100) 
+          document.getElementById("ranking").innerHTML += "<li>" + response[i]["name"].toString() + " ranking: " + response[i]["ranking"].toString() + " win: " + response[i]["win"].toString() + " lose: " + response[i]["lose"].toString() + " games: " + response[i]["games"].toString() + " mvp: " + response[i]["mvp"].toString() + " host: " + response[i]["host"].toString() + " win%: " + win_ratio.toString() + "% mvp%: " + mvp_ratio.toString() +"% </li>";
+        };
+      }).refreshRanking();
+      }
+      
+    </script>
+  </body>
+</html>
